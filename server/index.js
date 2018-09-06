@@ -2,8 +2,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-var counter = 0;
-
 // Utility function to reverse a string
 const reverse = (data) => {
     var reversed = '';
@@ -17,8 +15,6 @@ app.use(bodyParser.text());
 app.post('/reverse', (req, res) => {
     if (req.body) {
         const reversed = reverse(req.body);
-        counter += 1;
-        console.log(counter);
         res.send(reversed);
     };
 });

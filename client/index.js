@@ -1,6 +1,8 @@
 var request = require('request-promise');
 
-const numberOfRequests = 10;
+const numberOfRequests = 100; // Number of requests client will send at once
+
+// static POST request configuration
 const requestOptions = {  
     url: 'http://localhost:3000/reverse',
     method: 'POST',
@@ -11,12 +13,16 @@ const requestOptions = {
     body: 'test123'
 };
 
+// Return a promise to send a post request
 const requestPromise = () => {
-    return new Promise(() => {
-        return request(requestOptions)
-    });
+    const startTime = Date.now();
+    return request(requestOptions)
+        .then(() => {
+            return ((Date.now() - startTime) / 1000);
+        });
 };
 
+// Generate an array of request promises of length n
 const generateRequestPromises = () => {
     const requestPromises = [];
     for ( i = 0; i < numberOfRequests; i++ ) {
@@ -25,6 +31,21 @@ const generateRequestPromises = () => {
     return requestPromises;
 };
 
+// Given a list of response times find the average
+const calculateAverageResponseTime = (responseTimes) => {
+    var sum = 0;
+    responseTimes.forEach((responseTime) => {
+        sum += responseTime;
+    })
+    const avg = sum / responseTimes.length;
+
+    console.log('average response time: ' + avg.toString() + 's');
+};
+
 const requestPromises = generateRequestPromises();
-console.time('sending ' + numberOfRequests.toString() + ' requests');
-Promise.all(requestPromises).then((console.timeEnd('sending ' + numberOfRequests.toString() + ' requests')));
+
+// Send all requests, log the time it took to exectue, and calculate the average response
+Promise.all(requestPromises)
+    .then((responseTimes) => {
+        calculateAverageResponseTime(responseTimes);
+    });
