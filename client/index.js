@@ -1,6 +1,6 @@
 var request = require('request-promise');
 
-const numberOfRequests = 1000;
+const numberOfRequests = 10;
 const requestOptions = {  
     url: 'http://localhost:3000/reverse',
     method: 'POST',
