@@ -26,4 +26,5 @@ const generateRequestPromises = () => {
 };
 
 const requestPromises = generateRequestPromises();
-Promise.all(requestPromises)
+console.time('sending ' + numberOfRequests.toString() + ' requests');
+Promise.all(requestPromises).then((console.timeEnd('sending ' + numberOfRequests.toString() + ' requests')));
