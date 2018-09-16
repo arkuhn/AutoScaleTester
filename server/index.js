@@ -1,21 +1,17 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
+var express = require('express');  
 
-// Utility function to reverse a string
-const reverse = (data) => {
-    var reversed = '';
-    for ( i = data.length - 1; i >= 0; i--) {
-        reversed += data[i];
-    }
-    return reversed;
+const  rFact = (num) => {
+    var rval=1;
+    for (var i = 2; i <= num; i++)
+        rval = rval * i;
+    return rval;
 }
+var app = express();
 
-app.use(bodyParser.text());
-app.post('/reverse', (req, res) => {
-    if (req.body) {
-        const reversed = reverse(req.body);
-        res.send(reversed);
-    };
+app.post('/spin', function (req, res) {
+    rFact(10000000);
+    res.send('done');
 });
-app.listen(3000, () => console.log('AutoScaleTester now listening on port 3000!'))
+
+app.listen(8081);
+console.log('App started and listening on port 8081');

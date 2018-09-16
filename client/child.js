@@ -2,8 +2,9 @@
 var request = require('request-promise');
 
 // static POST request configuration
-const requestOptions = {  
-    url: 'http://localhost:3000/reverse',
+const requestOptions = {
+    url: 'http://hw1cloud549ak-env-3.29up92p9cr.us-east-2.elasticbeanstalk.com/spin',
+    //url: 'http://localhost:8081/spin',
     method: 'POST',
     headers: {
         'Content-Type': 'text/plain',
@@ -41,16 +42,12 @@ const calculateAverageResponseTime = (responseTimes) => {
     const avg = sum / responseTimes.length;
 
     console.log('average response time: ' + avg.toString() + 's\n');
+    process.exit(0)
 };
 
 const main = (numberOfRequests) => {
     const requestPromises = generateRequestPromises(numberOfRequests);
-
-    // Send all requests, log the time it took to exectue, and calculate the average response
-    Promise.all(requestPromises)
-        .then((responseTimes) => {
-            return calculateAverageResponseTime(responseTimes);
-        });
+    Promise.all(requestPromises).then((responseTimes) => calculateAverageResponseTime(responseTimes));
 }
 
 process.on('message', (numberOfRequests) => {
